@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+</head>
+<body>
+<header>
+    <div class="modal fade" id="Auth" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Авторизация</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+          </div>
+          <div class="modal-body">
+            <form method="post" action="{% url 'login' %}">
+                {% csrf_token %}
+              <div class="form-group">
+                <label for="inputLogin1">Логин</label>
+                <input name="username" type="text" class="form-control" id="inputLogin1" aria-describedby="emailHelp" placeholder="Введите логин">
+              </div>
+              <div class="form-group">
+                <label for="inputPassword1">Пароль</label>
+                <input name="password" type="password" class="form-control" id="inputPassword1" placeholder="Введите пароль">
+              </div>
+                <br>
+              <button type="submit" class="btn btn-primary">Продолжить</button>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#Reg" >Регистрация</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+<div class="modal fade" id="AddProduct" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Добавить товар</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+      </div>
+      <div class="modal-body">
+        <form method="post" action="{% url 'product' %}" enctype="multipart/form-data" id="AddProductForm">
+            {% csrf_token %}
+            <label for="inputImage">
+                Изображение
+            </label> <br>
+            <input type="file" name="Image" class="form-control-file" id="inputImage">
+            <br>
+            <label for="inputName">
+                Название
+            </label>
+            <input name="Name" type="text" class="form-control" id="inputName" placeholder="Введите название товара">
+
+            <label for="inputDesk">
+                Описание
+            </label>
+            <input name="Desk" type="text" class="form-control" id="inputDesk" placeholder="Введите описание товара">
+            
+            <label for="inputPrice">
+                Цена
+            </label>
+            <input name="Price" type="number" class="form-control" id="inputPrice" placeholder="Введите цену товара">
+            
+            <label for="inputStock">
+                В наличии
+            </label>
+            <input name="Stock" type="number" class="form-control" id="inputStock" placeholder="Введите количество товара">
+            
+            <label for="inputForKids">
+                Для детей
+            </label>
+            <br>
+            <input type="checkbox" name="ForKids" id="inputForKids">
+            <br>
+            <label for="inputDiscount">
+                Скидка
+            </label>
+            <input name="Disc" type="number" class="form-control" id="inputDiscount" placeholder="Введите скидку">
+        </form>
+      </div>
+        <script>
+        document.getElementById('AddProductForm').addEventListener('submit', function(event) {
+            console.log('Форма отправляется');
+        });
+        </script>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-primary" form="AddProductForm" data-bs-dismiss="modal">Добавить</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+    <div class="modal fade" id="Reg" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Регистрация</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+          </div>
+          <div class="modal-body">
+            <form method="post" action="{% url 'reg' %}">
+                {% csrf_token %}
+              <div class="form-group">
+                <label for="inputLogin2">Логин</label>
+                <input name="username" type="text" class="form-control" id="inputLogin2" aria-describedby="emailHelp" placeholder="Введите логин">
+              </div>
+              <div class="form-group">
+                <label for="inputPassword2">Пароль</label>
+                <input name="password" type="password" class="form-control" id="inputPassword2" placeholder="Введите пароль">
+              </div>
+                <div class="form-group">
+                <label for="inputPassword3">Повторите Пароль</label>
+                <input name="password" type="password" class="form-control" id="inputPassword3" placeholder="Введите пароль">
+              </div>
+                <br>
+              <button type="submit" class="btn btn-primary">Зарегистрироваться</button>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#Auth">Авторизация</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <nav class="navbar navbar-expand navbar-dark bg-dark">
+        <div class="container">
+            <a href="/" class="navbar-brand">78Store</a>
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a href="#" class="nav-link active">Главная</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">Корзина</a>
+                </li>
+                {% if request.user.is_authenticated %}
+                	<li class="nav-item" style="color: aliceblue; margin-top: 8px">
+                        <a href="#" style="text-decoration: none; color: aliceblue" data-bs-toggle="modal" data-bs-target="#AddProduct">Добаить товар</a>
+                    </li>
+                {% endif %}
+                <li class="nav-item">
+                    <a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#Auth">Аккаунт</a>
+                </li>
+                {% if request.user.is_authenticated %}
+                	<li class="nav-item" style="color: aliceblue; margin-top: 8px">{{ request.user }}</li>
+                    <li class="nav-item" style="color: aliceblue; margin-top: 8px"><a href="{% url 'logout' %}" style="text-decoration: none; color: aliceblue">⠀Выйти</a></li>
+                {% endif %} 
+            </ul>
+        </div>
+    </nav>
+</header>
+
+<div class="container-fluid p-5" style="margin-top: 3em; border-radius: 20px; background: #e3efff; width: 90%; margin-left: 5%">
+    <h2>Каталог</h2>
+    <div class="row">
+        <div class="col">
+            <div class="container">
+                <ul class="list-group list-group-flush rounded-3">
+                    <li class="list-group-item"><h4>Категории</h4></li>
+                    <li class="list-group-item">
+                        <a href="/discount/" class="btn btn-primary">Товары по акции</a>
+                    </li>
+                    <li class="list-group-item">
+                        <a href="/forkids/" class="btn btn-primary">Товары для детей</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-9">
+            <div class="row row-cols-4 row-gap-3 column-gap-3">
+                {% for p in products %}
+                    <div class="modal fade" id="Desk{{ forloop.counter }}" tabindex="-1" aria-labelledby="exampleModalLabel{{ forloop.counter }}" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel{{ forloop.counter }}">{{ p.name }}</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <img class="card-img-top" src="{{ p.image.url }}" alt="Card image cap" style="width: 100%; height: 100%; object-fit: cover;">
+                                    {{ p.description }}
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#Reg">В корзину</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="card mb3" style="width: 20em; padding: 0">
+                        <img class="card-img-top" src="{{ p.image.url }}" alt="Card image cap" style="width: 100%; height: 100%; object-fit: cover;">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ p.name|truncatewords:5 }}</h5>
+                            <h4>{{ p.price_with_discount }}р</h4>
+                            {% if p.price_with_discount != p.price %}
+                                <div class="d-inline-block">
+                                    <h5><strike>{{ p.price }}р</strike></h5>
+                                </div>
+                                <div class="d-inline-block">
+                                    <h5 class="container bg-danger rounded-3">-{{ p.sale_display }}%</h5>
+                                </div>
+                                <br>
+                            {% endif %}
+                            <a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#Desk{{ forloop.counter }}">Подробнее</a>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
