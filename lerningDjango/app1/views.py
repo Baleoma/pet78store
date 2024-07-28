@@ -2,26 +2,29 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 
-from app1.models import Product
+from app1.models import Product, Cart
 
 
 # Create your views here.
 def index_page(request):
     print(request.user)
     products = Product.objects.all()
-    return render(request, 'index.html', {'products': products})
+    cart = Cart.objects.all()
+    return render(request, 'index.html', {'products': products, 'cart': cart})
 
 
 def forkids_page(request):
     print(request.user)
     products = Product.objects.filter(forkids=True)
-    return render(request, 'forkids.html', {'products': products})
+    cart = Cart.objects.all()
+    return render(request, 'forkids.html', {'products': products, 'cart': cart})
 
 
 def discount_page(request):
     print(request.user)
     products = Product.objects.all()
-    return render(request, 'withdiscount.html', {'products': products})
+    cart = Cart.objects.all()
+    return render(request, 'withdiscount.html', {'products': products, 'cart': cart})
 
 
 def user_login(request):
@@ -74,7 +77,7 @@ def product(request):
             ForKids = False
 
         productadd = Product(image=Image, name=Name, description=Desk, price=Price,
-                             stock=Stock, sale=int(Disc)/100, forkids=ForKids)
+                             stock=Stock, sale=int(Disc) / 100, forkids=ForKids)
         if productadd is not None:
             productadd.save()
             print("yes product")
@@ -83,3 +86,16 @@ def product(request):
             print("no product")
             return redirect('login')
     return render(request, 'index.html')
+
+
+def addToCart(request):
+    if request.method == 'POST':
+        user_id = request.user.id
+        product_id = request.POST.get('product_id')
+        if user_id and product_id:
+            toCart = Cart(user_id=user_id, product_id=product_id)
+            toCart.save()
+            print(toCart)
+            return redirect('index')
+    return redirect('index')
+

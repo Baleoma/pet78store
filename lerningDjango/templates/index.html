@@ -130,6 +130,47 @@
         </div>
       </div>
     </div>
+
+<div class="modal fade" id="Cart" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel" >Корзина</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+          </div>
+            <div class="modal-body">
+                {% if not request.user.is_authenticated %}
+                    <h3>Сначала авторизуйтесь</h3>
+                {% else %}
+                    <table class="table table-striped-columns">
+                        <thead>
+                            <tr>
+                                <th scope="col">Название</th>
+                                <th scope="col">Цена</th>
+                                <th scope="col">Кол-во</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for c in cart %}
+                                {% if request.user.id == c.user.id %}
+                                    <tr>
+                                        <th scope="row">{{ c.product.name }}</th>
+                                        <th scope="row">{{ c.product.price_with_discount }}</th>
+                                        <th scope="row">{{ c.quantity }}</th>
+                                    </tr>
+                                {% endif %}
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                {% endif %}
+            </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" >Заказать</button>
+          </div>
+        </div>
+      </div>
+    </div>
     
     <nav class="navbar navbar-expand navbar-dark bg-dark">
         <div class="container">
@@ -139,7 +180,7 @@
                     <a href="#" class="nav-link active">Главная</a>
                 </li>
                 <li class="nav-item">
-                    <a href="#" class="nav-link">Корзина</a>
+                    <a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#Cart">Корзина</a>
                 </li>
                 {% if request.user.is_authenticated %}
                 	<li class="nav-item" style="color: aliceblue; margin-top: 8px">
@@ -190,7 +231,11 @@
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
-                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#Reg">В корзину</button>
+                                    <form action="{% url 'addToCart' %}" method="post">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="product_id" value="{{ p.id }}">
+                                        <button type="submit" class="btn btn-primary">В корзину</button>
+                                    </form>
                                 </div>
                             </div>
                         </div>

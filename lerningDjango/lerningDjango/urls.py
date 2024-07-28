@@ -17,7 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from app1.views import index_page, user_login, user_logout, forkids_page, discount_page, user_reg, product
+from app1.views import index_page, user_login, user_logout, forkids_page, discount_page, user_reg, product, addToCart
 from django.conf import settings
 from django.conf.urls.static import static
 
@@ -30,6 +30,7 @@ urlpatterns = [
     path('logout/', user_logout, name="logout"),
     path('reg/', user_reg, name='reg'),
     path('product/', product, name='product'),
+    path('addToCart/', addToCart, name='addToCart'),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
